@@ -1,0 +1,72 @@
+---
+import HeaderLink from './HeaderLink.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<header>
+    <nav>
+        <h2><a href="/">{SITE_TITLE}</a></h2>
+        <div class="internal-links">
+            <HeaderLink href="/">Home</HeaderLink>
+            <HeaderLink href="/blog">Blog</HeaderLink>
+        </div>
+        <div class="social-links">
+            <a href="https://github.com/UlkuTuncerKucuktas" target="_blank" rel="noopener" aria-label="GitHub">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/ulkutuncerkucuktas/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+        </div>
+    </nav>
+</header>
+
+<style>
+    header {
+        margin: 0;
+        padding: 0 1em;
+        background: white;
+        box-shadow: 0 2px 8px rgba(var(--black), 5%);
+    }
+    h2 {
+        margin: 0;
+        font-size: 1em;
+    }
+    h2 a,
+    h2 a.active {
+        text-decoration: none;
+    }
+    nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 1em 0;
+    }
+    nav a {
+        padding: 0.5em;
+        color: var(--black);
+        text-decoration: none;
+    }
+    nav a:hover {
+        color: #534AB7;
+    }
+    .internal-links {
+        display: flex;
+        gap: 0.5rem;
+    }
+    .social-links {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+    }
+    .social-links a {
+        color: #6b6b6b;
+        padding: 0;
+        transition: color 0.2s;
+    }
+    .social-links a:hover {
+        color: #534AB7;
+    }
+</style>
