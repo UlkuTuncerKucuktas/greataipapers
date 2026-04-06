@@ -4,12 +4,9 @@ import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
-
 type Props = CollectionEntry<'blog'>['data'];
-
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 ---
-
 <html lang="en">
 	<head>
 		<BaseHead title={title} description={description} />
@@ -26,14 +23,45 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				display: block;
 				margin: 0 auto;
 				border-radius: 12px;
-				box-shadow: var(--box-shadow);
+				width: 100%;
+				height: auto;
 			}
 			.prose {
 				width: 720px;
 				max-width: calc(100% - 2em);
 				margin: auto;
 				padding: 1em;
-				color: rgb(var(--gray-dark));
+				color: #8B89A0;
+			}
+			.prose :global(h1),
+			.prose :global(h2),
+			.prose :global(h3),
+			.prose :global(h4) {
+				color: #E8E6F0;
+			}
+			.prose :global(strong) {
+				color: #E8E6F0;
+			}
+			.prose :global(code) {
+				background: #222338;
+				padding: 2px 6px;
+				border-radius: 4px;
+				color: #AFA9EC;
+			}
+			.prose :global(pre) {
+				background: #1A1B2E;
+				border: 1px solid #2A2B42;
+				border-radius: 8px;
+				padding: 1rem;
+			}
+			.prose :global(blockquote) {
+				border-left: 3px solid #7F77DD;
+				padding-left: 1rem;
+				color: #8B89A0;
+			}
+			.prose :global(hr) {
+				border: none;
+				border-top: 1px solid #2A2B42;
 			}
 			.title {
 				margin-bottom: 1em;
@@ -43,23 +71,23 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			}
 			.title h1 {
 				margin: 0 0 0.5em 0;
+				color: #E8E6F0;
 			}
 			.date {
 				margin-bottom: 0.5em;
-				color: rgb(var(--gray));
+				color: #5E5D72;
 			}
 			.last-updated-on {
 				font-style: italic;
 			}
 		</style>
 	</head>
-
 	<body>
 		<Header />
 		<main>
 			<article>
 				<div class="hero-image">
-                                    {heroImage && <img width="1020" height="510" src={heroImage.src || heroImage} alt="" />}
+					{heroImage && <img width="1020" height="510" src={heroImage.src || heroImage} alt="" />}
 				</div>
 				<div class="prose">
 					<div class="title">

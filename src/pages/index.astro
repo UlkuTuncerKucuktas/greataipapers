@@ -10,11 +10,11 @@ const posts = (await getCollection('blog')).sort(
 );
 
 const topics = [
-    { name: 'Computer vision', bg: '#EEEDFE', color: '#3C3489' },
-    { name: 'NLP', bg: '#E1F5EE', color: '#085041' },
-    { name: 'Object detection', bg: '#FAECE7', color: '#712B13' },
-    { name: 'Transformers', bg: '#E6F1FB', color: '#0C447C' },
-    { name: 'Reinforcement learning', bg: '#FAEEDA', color: '#633806' },
+    { name: 'Computer vision', bg: '#2A2B42', color: '#AFA9EC' },
+    { name: 'NLP', bg: '#1A3028', color: '#5DCAA5' },
+    { name: 'Object detection', bg: '#2D1F1A', color: '#F0997B' },
+    { name: 'Transformers', bg: '#1A2535', color: '#85B7EB' },
+    { name: 'Reinforcement learning', bg: '#2D2A1E', color: '#EF9F27' },
 ];
 ---
 
@@ -28,12 +28,15 @@ const topics = [
             }
 
             :root {
-                --accent: #534AB7;
-                --text-primary: #1a1a1a;
-                --text-secondary: #6b6b6b;
-                --text-tertiary: #999;
-                --border: #e5e5e5;
-                --bg-page: #fafafa;
+                --accent: #7F77DD;
+                --accent-hover: #AFA9EC;
+                --bg-page: #121220;
+                --bg-surface: #1A1B2E;
+                --bg-elevated: #222338;
+                --text-primary: #E8E6F0;
+                --text-secondary: #8B89A0;
+                --text-tertiary: #5E5D72;
+                --border: #2A2B42;
             }
 
             body {
@@ -62,6 +65,7 @@ const topics = [
                 line-height: 1.3;
                 letter-spacing: -0.5px;
                 margin: 0 0 0.75rem;
+                color: var(--text-primary);
             }
 
             .hero p {
@@ -69,18 +73,6 @@ const topics = [
                 color: var(--text-secondary);
                 line-height: 1.6;
                 margin: 0;
-            }
-
-            .hero p a {
-                color: var(--text-primary);
-                font-weight: 500;
-                text-decoration: none;
-                border-bottom: 1px solid var(--border);
-            }
-
-            .hero p a:hover {
-                border-color: var(--accent);
-                color: var(--accent);
             }
 
             .topics {
@@ -143,7 +135,7 @@ const topics = [
             }
 
             .post-link:hover .post-title {
-                color: var(--accent);
+                color: var(--accent-hover);
             }
 
             .post-date {
