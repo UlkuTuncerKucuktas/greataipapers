@@ -27,6 +27,8 @@ import { SITE_TITLE } from '../consts';
         padding: 0 1em;
         background: white;
         box-shadow: 0 2px 8px rgba(var(--black), 5%);
+        width: 100%;
+        box-sizing: border-box;
     }
     h2 {
         margin: 0;
@@ -43,18 +45,21 @@ import { SITE_TITLE } from '../consts';
         max-width: 720px;
         margin: 0 auto;
         padding: 1em 0;
+        flex-wrap: wrap;
+        gap: 0.5rem;
     }
     nav a {
         padding: 0.5em;
         color: var(--black);
         text-decoration: none;
+        font-size: 0.9rem;
     }
     nav a:hover {
         color: #534AB7;
     }
     .internal-links {
         display: flex;
-        gap: 0.5rem;
+        gap: 0.25rem;
     }
     .social-links {
         display: flex;
