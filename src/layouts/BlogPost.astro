@@ -63,6 +63,12 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				border: none;
 				border-top: 1px solid #2A2B42;
 			}
+                        .prose :global(img) {
+                                max-width: 100%;
+     				height: auto;
+    				border-radius: 8px;
+    				margin: 1.5rem 0;
+			}
 			.title {
 				margin-bottom: 1em;
 				padding: 1em 0;
