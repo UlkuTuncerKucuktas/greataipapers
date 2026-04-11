@@ -4,11 +4,13 @@ import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 
 const cat = [
-  "  /\\_/\\",
-  " ( o.O )  ?",
-  "  > ~ <",
-  " /|   |\\",
-  "(_|   |_)",
+  "",
+  "     /\\_/\\",
+  "    ( o.O )   ?",
+  "     > ~ <",
+  "    /|   |\\",
+  "   (_|   |_)",
+  "",
 ].join("\n");
 ---
 <!doctype html>
@@ -31,28 +33,40 @@ const cat = [
             .cat-404 {
                 font-family: 'Courier New', monospace;
                 color: var(--green);
-                font-size: 1rem;
+                font-size: 1.1rem;
                 line-height: 1.4;
                 white-space: pre;
-                margin: 2rem 0;
+                margin: 1.5rem 0;
                 display: inline-block;
             }
-            h1 { font-size: 3rem; margin: 0 0 0.5rem; }
+            h1 {
+                font-size: 4rem;
+                margin: 0;
+                font-weight: 700;
+                letter-spacing: -2px;
+                color: var(--text);
+            }
             .subtitle {
                 color: var(--text-muted);
                 font-size: 1.05rem;
-                margin: 0 0 1rem;
+                margin: 0.25rem 0 0;
                 font-style: italic;
             }
             .home-link {
+                display: inline-block;
+                margin-top: 1rem;
                 color: var(--accent);
                 text-decoration: none;
                 font-size: 0.95rem;
-                border-bottom: 1px solid var(--border);
-                padding-bottom: 2px;
-                transition: border-color 0.2s;
+                border: 1px solid var(--border);
+                padding: 8px 20px;
+                border-radius: 6px;
+                transition: border-color 0.2s, color 0.2s;
             }
-            .home-link:hover { border-color: var(--accent); }
+            .home-link:hover {
+                border-color: var(--accent);
+                color: var(--accent-hover);
+            }
         </style>
     </head>
     <body>
@@ -61,7 +75,7 @@ const cat = [
             <h1>404</h1>
             <p class="subtitle">this page wandered off</p>
             <pre class="cat-404" set:text={cat} />
-            <p><a class="home-link" href="/">take me home</a></p>
+            <a class="home-link" href="/">take me home</a>
         </main>
         <Footer />
     </body>
