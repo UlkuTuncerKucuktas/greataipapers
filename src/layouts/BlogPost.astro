@@ -117,9 +117,19 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				content: "/\\_/\\\A( -.- )\A > ^ <";
 				right: -5.5rem;
 			}
-			@media (min-width: 900px) {
-				.title::before, .title::after {
+			.title::before, .title::after {
+				display: block;
+			}
+			@media (max-width: 899px) {
+				.title::before {
+					position: static;
+					transform: none;
 					display: block;
+					text-align: center;
+					margin-bottom: 0.5rem;
+				}
+				.title::after {
+					display: none;
 				}
 			}
 		</style>
