@@ -299,15 +299,43 @@ const cats = [
         });
     });
 </script>
-</html>
 <script>
-  setInterval(() => {
-    const pre = document.querySelector('.ascii-art');
-    if (!pre) return;
-    const original = pre.textContent;
-    if (original.includes('-.-')) {
-      pre.textContent = original.replace('-.-', '___');
-      setTimeout(() => { pre.textContent = original; }, 200);
-    }
-  }, 5000);
+  const pre = document.querySelector('.ascii-art');
+  if (pre) {
+    const base = pre.textContent;
+
+    // Awake cat blinks every 4 seconds
+    setInterval(() => {
+      pre.textContent = pre.textContent.replace('( o.o )', '( -.- )');
+      setTimeout(() => { pre.textContent = pre.textContent.replace('( -.- )', '( o.o )'); }, 200);
+    }, 4000);
+
+    // Sleepy cat zzz cycles: z -> zz -> zzZ -> z
+    const zzStates = [
+      { from: null, to: null }, // will be set dynamically
+    ];
+    let zzFrame = 0;
+    const zzPatterns = ['z  ', 'zz ', 'zzZ'];
+    setInterval(() => {
+      const txt = pre.textContent;
+      const current = zzPatterns[zzFrame % 3];
+      const next = zzPatterns[(zzFrame + 1) % 3];
+      // Find the Z line (first line with just z/Z chars)
+      const lines = txt.split('\n');
+      for (let i = 0; i < lines.length; i++) {
+        if (lines[i].trimEnd().endsWith('Z') || lines[i].trimEnd().endsWith('z')) {
+          const trimmed = lines[i].trimEnd();
+          const lastThree = trimmed.slice(-3);
+          if (lastThree === current || zzFrame === 0) {
+            lines[i] = lines[i].replace(/[zZ]{1,3}\s*$/, next);
+          }
+          break;
+        }
+      }
+      pre.textContent = lines.join('\n');
+      zzFrame++;
+    }, 800);
+  }
 </script>
+</html>
+
