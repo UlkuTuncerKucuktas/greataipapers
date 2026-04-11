@@ -1,19 +1,47 @@
+:root {
+    --bg: #110F0E;
+    --bg-surface: #1A1816;
+    --bg-code: #1C1917;
+    --text: #F0ECE4;
+    --text-body: #E2DED6;
+    --text-muted: #9E9585;
+    --text-faint: #B0A898;
+    --border: #2A2520;
+    --accent: #C9A96E;
+    --accent-hover: #DFC088;
+    --green: #4ADE80;
+}
+
+[data-theme="light"] {
+    --bg: #FAF7F2;
+    --bg-surface: #F0EDE6;
+    --bg-code: #EAE6DF;
+    --text: #1A1816;
+    --text-body: #2E2A25;
+    --text-muted: #7A7060;
+    --text-faint: #5A5248;
+    --border: #DDD8CE;
+    --accent: #8B6914;
+    --accent-hover: #6B5010;
+    --green: #1A7A3A;
+}
+
 html {
-	background: #110F0E;
-	color: #F0ECE4;
+    background: var(--bg);
+    color: var(--text);
 }
 
 body {
-	margin: 0;
-	background: #110F0E;
-	color: #F0ECE4;
-	font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 a {
-	color: #C9A96E;
+    color: var(--accent);
 }
 
 a:hover {
-	color: #DFC088;
+    color: var(--accent-hover);
 }

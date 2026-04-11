@@ -30,14 +30,14 @@ const cats = [
             }
 
             :root {
-                --accent: #8B83E0;
-                --accent-hover: #AFA9EC;
-                --bg-page: #110F0E;
-                --bg-surface: #1A1816;
-                --text-primary: #F0EEF6;
-                --text-secondary: #D1D1D8;
-                --text-tertiary: #8E8EA0;
-                --border: #2A2520;
+                --accent: var(--accent);
+                --accent-hover: var(--accent-hover);
+                --bg-page: var(--bg);
+                --bg-surface: var(--bg-surface);
+                --text-primary: var(--text);
+                --text-secondary: var(--text-body);
+                --text-tertiary: var(--text-muted);
+                --border: var(--border);
                 --green: #4ADE80;
             }
 
@@ -179,6 +179,35 @@ const cats = [
                 opacity: 0.85;
             }
 
+            .search-section {
+                display: flex;
+                align-items: baseline;
+                justify-content: space-between;
+                gap: 1rem;
+                margin-top: 2.5rem;
+                margin-bottom: 1rem;
+            }
+            .search-section .section-label {
+                margin: 0;
+            }
+            .search-input {
+                background: var(--bg-surface);
+                border: 1px solid var(--border);
+                border-radius: 6px;
+                padding: 6px 12px;
+                color: var(--text);
+                font-size: 0.8rem;
+                width: 180px;
+                outline: none;
+                transition: border-color 0.2s;
+                font-family: inherit;
+            }
+            .search-input::placeholder {
+                color: var(--text-muted);
+            }
+            .search-input:focus {
+                border-color: var(--accent);
+            }
             .empty-state {
                 text-align: center;
                 padding: 3rem 0;
@@ -226,7 +255,10 @@ const cats = [
                 </div>
             </section>
 
-            <p class="section-label">Latest reviews</p>
+            <div class="search-section">
+                <p class="section-label">Latest reviews</p>
+                <input type="text" id="search" placeholder="search posts..." class="search-input" />
+            </div>
 
             {posts.length > 0 ? (
                 <ul class="post-list">
@@ -257,4 +289,25 @@ const cats = [
         </main>
         <Footer />
     </body>
+<script>
+    document.getElementById('search')?.addEventListener('input', (e) => {
+        const q = e.target.value.toLowerCase();
+        document.querySelectorAll('.post-item').forEach(item => {
+            const title = item.querySelector('.post-title')?.textContent.toLowerCase() || '';
+            const desc = item.querySelector('.post-description')?.textContent.toLowerCase() || '';
+            item.style.display = (title.includes(q) || desc.includes(q)) ? '' : 'none';
+        });
+    });
+</script>
 </html>
+<script>
+  setInterval(() => {
+    const pre = document.querySelector('.ascii-art');
+    if (!pre) return;
+    const original = pre.textContent;
+    if (original.includes('-.-')) {
+      pre.textContent = original.replace('-.-', '___');
+      setTimeout(() => { pre.textContent = original; }, 200);
+    }
+  }, 5000);
+</script>

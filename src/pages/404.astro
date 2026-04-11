@@ -1,0 +1,74 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+---
+<!doctype html>
+<html lang="en">
+    <head>
+        <BaseHead title="404 - Lost Cat" description="Page not found" />
+        <style>
+            *, *::before, *::after { box-sizing: border-box; }
+            body {
+                background: var(--bg, #110F0E);
+                color: var(--text, #F0ECE4);
+                margin: 0;
+                font-family: 'Inter', -apple-system, sans-serif;
+            }
+            main {
+                max-width: 720px;
+                margin: 0 auto;
+                padding: 4rem 1.5rem;
+                text-align: center;
+            }
+            .cat-404 {
+                font-family: 'Courier New', monospace;
+                color: #4ADE80;
+                font-size: 0.8rem;
+                line-height: 1.3;
+                white-space: pre;
+                margin: 2rem 0;
+                display: inline-block;
+            }
+            h1 {
+                font-size: 2rem;
+                margin: 0 0 0.5rem;
+            }
+            .subtitle {
+                color: #9E9585;
+                font-size: 1rem;
+                margin: 0 0 2rem;
+            }
+            .home-link {
+                color: #C9A96E;
+                text-decoration: none;
+                font-size: 0.95rem;
+                border-bottom: 1px solid #2A2520;
+                padding-bottom: 2px;
+                transition: border-color 0.2s;
+            }
+            .home-link:hover {
+                border-color: #C9A96E;
+            }
+        </style>
+    </head>
+    <body>
+        <Header />
+        <main>
+            <h1>404</h1>
+            <p class="subtitle">this page wandered off</p>
+            <pre class="cat-404">{String.raw`
+      /\_/\
+     ( o.O )   ?
+      > ~ 
+     /|   |\   ??
+    (_|   |_)
+       | |
+      _| |_
+     |_____|
+            `}</pre>
+            <p><a class="home-link" href="/">take me home</a></p>
+        </main>
+        <Footer />
+    </body>
+</html>
