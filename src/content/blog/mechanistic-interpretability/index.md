@@ -80,6 +80,8 @@ In the **OV matrix**, entry $(i, j)$ says: if this head attends to token $i$, ho
 
 These matrices are enormous, with 2.5 billion entries each at a 50,000-token vocabulary. You cannot inspect every entry. But you can sort by magnitude and ask what the strongest patterns are. This is how researchers turn opaque weight matrices into readable descriptions of what each head does.
 
+Researchers at Anthropic and elsewhere have catalogued a growing zoo of attention head types, each with a distinct job. There are previous-token heads that just look one step back, induction heads that detect and continue repeated patterns, duplicate-token heads that find earlier copies of the current token, name-mover heads that copy names into prediction slots, and many others. Each head type shows up as a recognizable signature in its QK and OV matrices. The examples below show two of the simplest patterns, but the same analysis scales to every head in the model.
+
 ![QK matrices for two attention heads](/blog/mechanistic-interpretability/7.png)
 
 The previous-token head on the left has a clean subdiagonal: "cat" attends to "the", "sat" attends to "cat", "on" attends to "sat", and so on. This is one of the simplest and most common head types. It just copies the identity of the previous token forward. The pronoun-resolution head on the right is more interesting. The row for "she" lights up almost exclusively at the "Mary" column. The head has learned a matching rule that connects pronouns to their referents.
