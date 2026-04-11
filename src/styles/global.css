@@ -1,19 +1,19 @@
 html {
-	background: #0F1117;
-	color: #F0EEF6;
+	background: #110F0E;
+	color: #F0ECE4;
 }
 
 body {
 	margin: 0;
-	background: #0F1117;
-	color: #F0EEF6;
+	background: #110F0E;
+	color: #F0ECE4;
 	font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 a {
-	color: #8B83E0;
+	color: #C9A96E;
 }
 
 a:hover {
-	color: #AFA9EC;
+	color: #DFC088;
 }
