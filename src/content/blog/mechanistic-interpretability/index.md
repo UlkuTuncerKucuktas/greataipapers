@@ -2,6 +2,7 @@
 title: 'Mechanistic Interpretability'
 description: 'Taking neural networks apart to understand what their pieces do, how information moves between them, and how they wire together into circuits that carry out specific behaviors.'
 pubDate: 'Apr 11 2026'
+heroImage: '/blog/mechanistic-interpretability/5.png'
 ---
 
 Large language models learn their capabilities during training, but what exactly they learn is hard to say. The parameters encode some set of algorithms for language, reasoning, and recall. We just can't read them directly. A trained model is, in a sense, a compiled program running on the unusual virtual machine of a neural network architecture. Mechanistic interpretability is the effort to decompile it: to take a neural network apart and understand what its pieces do, how information moves between them, and how they wire together into circuits that carry out specific behaviors.
