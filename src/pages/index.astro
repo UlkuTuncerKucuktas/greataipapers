@@ -10,8 +10,8 @@ const posts = (await getCollection('blog')).sort(
 );
 
 const cats = [
-  "                                       z  ",
-  "                                      z   ",
+  "                                        z  ",
+  "                                       z   ",
   "     /\\_/\\  ______      /\\_/\\  ______ Z  ",
   "    ( o.o )|      |    ( -.- )|      |    ",
   "     > ^ < |  AI  |     > ^ < |  ML  |   ",
@@ -82,35 +82,13 @@ const cats = [
                 position: relative;
             }
 
-            .zzz-container {
-                position: absolute;
-                right: calc(50% - 13rem);
-                top: -0.5rem;
-            }
+            
 
-            .zzz {
-                position: absolute;
-                font-family: 'Courier New', monospace;
-                color: var(--green);
-                opacity: 0;
-                animation: floatZ 3s ease-out infinite;
-            }
+            
 
-            .zzz1 {
-                font-size: 0.65rem;
-                animation-delay: 0s;
-                right: 0;
-            }
-            .zzz2 {
-                font-size: 0.75rem;
-                animation-delay: 1s;
-                right: 0.5rem;
-            }
-            .zzz3 {
-                font-size: 0.9rem;
-                animation-delay: 2s;
-                right: 1rem;
-            }
+            
+            
+            
 
             @keyframes floatZ {
                 0% {
@@ -129,7 +107,7 @@ const cats = [
                 }
             }
 
-            .ascii-box-REPLACED {
+            .ascii-box {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
@@ -304,12 +282,8 @@ const cats = [
                 <h1>Dissecting the papers that shape AI</h1>
                 <div class="ascii-box">
                     <pre class="ascii-art" set:text={cats} />
-                    <div class="zzz-container">
-                        <span class="zzz zzz1">z</span>
-                        <span class="zzz zzz2">z</span>
-                        <span class="zzz zzz3">Z</span>
-                    </div>
                     <span class="ascii-tagline">papers worth reading.</span>
+                    <br/>
                     <span class="memorial">in loving memory of paperswithcode ♡</span>
                 </div>
             </section>
@@ -350,18 +324,39 @@ const cats = [
     </body>
 
 
+
 <script>
   const pre = document.querySelector('.ascii-art');
   if (pre) {
+    // Awake cat blinks
     setInterval(() => {
-      const txt = pre.textContent;
-      if (txt.includes('o.o')) {
-        pre.textContent = txt.replace('o.o', '-.-');
+      const t = pre.textContent;
+      if (t.includes('o.o')) {
+        pre.textContent = t.replace('o.o', '-.-');
         setTimeout(() => {
           pre.textContent = pre.textContent.replace('-.-', 'o.o');
         }, 200);
       }
     }, 4000);
+
+    // Sleepy zzz floats: cycle through patterns
+    const zzz = ['z  ', ' z ', '  Z', ' z ', 'z  '];
+    let zi = 0;
+    setInterval(() => {
+      const lines = pre.textContent.split('\n');
+      // First 3 lines are the zzz lines
+      if (lines.length > 2) {
+        const pad = lines[2].indexOf('/');
+        const zzEnd = lines[2].length;
+        for (let i = 0; i < 3; i++) {
+          const base = lines[i].replace(/[zZ\s]*$/, '');
+          const target = base.padEnd(zzEnd - 3, ' ') + zzz[(zi + i) % zzz.length];
+          lines[i] = target;
+        }
+      }
+      pre.textContent = lines.join('\n');
+      zi++;
+    }, 600);
   }
 </script>
 </html>
