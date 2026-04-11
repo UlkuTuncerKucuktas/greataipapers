@@ -8,14 +8,6 @@ import { getCollection } from 'astro:content';
 const posts = (await getCollection('blog')).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
-
-const topics = [
-    { name: 'Computer vision', bg: '#2A2B42', color: '#AFA9EC' },
-    { name: 'NLP', bg: '#1A3028', color: '#5DCAA5' },
-    { name: 'Object detection', bg: '#2D1F1A', color: '#F0997B' },
-    { name: 'Transformers', bg: '#1A2535', color: '#85B7EB' },
-    { name: 'Reinforcement learning', bg: '#2D2A1E', color: '#EF9F27' },
-];
 ---
 
 <!doctype html>
@@ -68,25 +60,17 @@ const topics = [
                 color: var(--text-primary);
             }
 
-            .hero p {
-                font-size: 1.05rem;
-                color: var(--text-secondary);
-                line-height: 1.6;
-                margin: 0;
-            }
-
-            .topics {
-                display: flex;
-                gap: 8px;
-                flex-wrap: wrap;
-                margin-top: 1.25rem;
-            }
-
-            .topic-tag {
-                font-size: 0.8rem;
-                padding: 4px 14px;
-                border-radius: 20px;
-                font-weight: 500;
+            .ascii-art {
+                font-family: 'Courier New', monospace;
+                color: #8B83E0;
+                font-size: 0.75rem;
+                line-height: 1.4;
+                margin-top: 1.5rem;
+                background: none;
+                border: none;
+                padding: 0;
+                overflow-x: auto;
+                white-space: pre;
             }
 
             .section-label {
@@ -175,6 +159,10 @@ const topics = [
                 .hero {
                     padding: 2rem 0 1.5rem;
                 }
+
+                .ascii-art {
+                    font-size: 0.55rem;
+                }
             }
         </style>
     </head>
@@ -183,17 +171,15 @@ const topics = [
         <main>
             <section class="hero">
                 <h1>Dissecting the papers that shape AI</h1>
-                <p>
-                    Summaries, reviews, and deep dives into landmark research — from computer vision
-                    and NLP to reinforcement learning.
-                </p>
-                <div class="topics">
-                    {topics.map((t) => (
-                        <span class="topic-tag" style={`background: ${t.bg}; color: ${t.color};`}>
-                            {t.name}
-                        </span>
-                    ))}
-                </div>
+                <pre class="ascii-art">{`                                          z
+                                         z
+      /\\_/\\  ______       /\\_/\\  ______  Z
+     ( o.o )|      |     ( -.- )|      |
+      > ^ < |  AI  |      > ^ < |  ML  |
+     /     \\|______|     /     \\|______|
+    (__|  |__)          (__|  |__)
+
+         papers worth reading.`}</pre>
             </section>
 
             <p class="section-label">Latest reviews</p>
