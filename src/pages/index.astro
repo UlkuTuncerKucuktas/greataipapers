@@ -10,9 +10,7 @@ const posts = (await getCollection('blog')).sort(
 );
 
 const cats = [
-  "                                        z  ",
-  "                                       z   ",
-  "     /\\_/\\  ______      /\\_/\\  ______ Z  ",
+  "     /\\_/\\  ______      /\\_/\\  ______     ",
   "    ( o.o )|      |    ( -.- )|      |    ",
   "     > ^ < |  AI  |     > ^ < |  ML  |   ",
   "    /     \\|______|    /     \\|______|   ",
@@ -116,6 +114,63 @@ const cats = [
                 background: radial-gradient(ellipse at center bottom, transparent 0%, transparent 100%);
                 border-radius: 12px;
             }
+
+            .ascii-box {
+                position: relative;
+            }
+
+            .zzz-wrap {
+                position: absolute;
+                top: 0;
+                left: calc(50% + 6.5em);
+                width: 2em;
+                height: 3em;
+                pointer-events: none;
+            }
+
+            .zz {
+                position: absolute;
+                bottom: 0;
+                font-family: 'Courier New', monospace;
+                color: var(--green);
+                font-weight: bold;
+                opacity: 0;
+                animation: floatUp 3s ease-out infinite;
+            }
+
+            .z1 {
+                font-size: 0.6rem;
+                left: 0;
+                animation-delay: 0s;
+            }
+            .z2 {
+                font-size: 0.7rem;
+                left: 0.4em;
+                animation-delay: 1s;
+            }
+            .z3 {
+                font-size: 0.85rem;
+                left: 0.9em;
+                animation-delay: 2s;
+            }
+
+            @keyframes floatUp {
+                0% {
+                    opacity: 0;
+                    transform: translateY(0);
+                }
+                10% {
+                    opacity: 0.7;
+                }
+                70% {
+                    opacity: 0.3;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-40px) translateX(5px);
+                }
+            }
+
             .ascii-art {
                 font-family: 'Courier New', monospace;
                 color: var(--green);
@@ -265,7 +320,64 @@ const cats = [
                     padding: 2rem 0 1.5rem;
                 }
 
-                .ascii-art {
+    
+            .ascii-box {
+                position: relative;
+            }
+
+            .zzz-wrap {
+                position: absolute;
+                top: 0;
+                left: calc(50% + 6.5em);
+                width: 2em;
+                height: 3em;
+                pointer-events: none;
+            }
+
+            .zz {
+                position: absolute;
+                bottom: 0;
+                font-family: 'Courier New', monospace;
+                color: var(--green);
+                font-weight: bold;
+                opacity: 0;
+                animation: floatUp 3s ease-out infinite;
+            }
+
+            .z1 {
+                font-size: 0.6rem;
+                left: 0;
+                animation-delay: 0s;
+            }
+            .z2 {
+                font-size: 0.7rem;
+                left: 0.4em;
+                animation-delay: 1s;
+            }
+            .z3 {
+                font-size: 0.85rem;
+                left: 0.9em;
+                animation-delay: 2s;
+            }
+
+            @keyframes floatUp {
+                0% {
+                    opacity: 0;
+                    transform: translateY(0);
+                }
+                10% {
+                    opacity: 0.7;
+                }
+                70% {
+                    opacity: 0.3;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-40px) translateX(5px);
+                }
+            }
+
+            .ascii-art {
                     font-size: 0.5rem;
                 }
 
@@ -282,6 +394,11 @@ const cats = [
                 <h1>Dissecting the papers that shape AI</h1>
                 <div class="ascii-box">
                     <pre class="ascii-art" set:text={cats} />
+                    <div class="zzz-wrap">
+                        <span class="zz z1">z</span>
+                        <span class="zz z2">z</span>
+                        <span class="zz z3">Z</span>
+                    </div>
                     <span class="ascii-tagline">papers worth reading.</span>
                     <br/>
                     <span class="memorial">in loving memory of paperswithcode ♡</span>
@@ -339,24 +456,7 @@ const cats = [
       }
     }, 4000);
 
-    // Sleepy zzz floats: cycle through patterns
-    const zzz = ['z  ', ' z ', '  Z', ' z ', 'z  '];
-    let zi = 0;
-    setInterval(() => {
-      const lines = pre.textContent.split('\n');
-      // First 3 lines are the zzz lines
-      if (lines.length > 2) {
-        const pad = lines[2].indexOf('/');
-        const zzEnd = lines[2].length;
-        for (let i = 0; i < 3; i++) {
-          const base = lines[i].replace(/[zZ\s]*$/, '');
-          const target = base.padEnd(zzEnd - 3, ' ') + zzz[(zi + i) % zzz.length];
-          lines[i] = target;
-        }
-      }
-      pre.textContent = lines.join('\n');
-      zi++;
-    }, 600);
+    
   }
 </script>
 </html>
