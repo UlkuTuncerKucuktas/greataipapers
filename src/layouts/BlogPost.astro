@@ -59,7 +59,15 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				padding-left: 1rem;
 				color: #D1D1D8;
 			}
-			.prose :global(hr) {
+            .prose :global(.katex-display) {
+                overflow-x: auto;
+                overflow-y: hidden;
+                padding: 0.5rem 0;
+                -webkit-overflow-scrolling: touch;
+            }
+            .prose :global(.katex) {
+                font-size: 0.95em;
+            }			.prose :global(hr) {
 				border: none;
 				border-top: 1px solid #252640;
 			}
