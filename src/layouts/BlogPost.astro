@@ -94,28 +94,31 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 			.last-updated-on {
 				font-style: italic;
 			}
-			.title-cats {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				gap: 2rem;
-				width: 100%;
+			.title {
+				position: relative;
 			}
-			.title-center {
-				flex: 1;
-				max-width: 600px;
-			}
-			.cat-left, .cat-right {
+			.title::before, .title::after {
 				font-family: 'Courier New', monospace;
 				color: #4ADE80;
-				font-size: 0.7rem;
+				font-size: 0.65rem;
 				line-height: 1.3;
 				white-space: pre;
-				opacity: 0.5;
+				opacity: 0.4;
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
 				display: none;
 			}
-			@media (min-width: 768px) {
-				.cat-left, .cat-right {
+			.title::before {
+				content: "/\\_/\\\A( o.o )\A > ^ <";
+				left: -5.5rem;
+			}
+			.title::after {
+				content: "/\\_/\\\A( -.- )\A > ^ <";
+				right: -5.5rem;
+			}
+			@media (min-width: 900px) {
+				.title::before, .title::after {
 					display: block;
 				}
 			}
@@ -130,10 +133,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				</div>
 				<div class="prose">
 					<div class="title">
-						<div class="title-cats">
-							<span class="cat-left">/\_/\<br/>( o.o )<br/> > ^ <</span>
-							<div class="title-center">
-								<div class="date">
+						<div class="date">
 							<FormattedDate date={pubDate} />
 							{
 								updatedDate && (
@@ -145,9 +145,6 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 						</div>
 						<h1>{title}</h1>
 								<hr />
-							</div>
-							<span class="cat-right">/\_/\<br/>( -.- )<br/> > ^ <</span>
-						</div>
 					</div>
 					<slot />
 				</div>
