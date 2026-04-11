@@ -8,6 +8,16 @@ import { getCollection } from 'astro:content';
 const posts = (await getCollection('blog')).sort(
     (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
+
+const cats = [
+  "                                       z  ",
+  "                                      z   ",
+  "     /\\_/\\  ______      /\\_/\\  ______ Z  ",
+  "    ( o.o )|      |    ( -.- )|      |    ",
+  "     > ^ < |  AI  |     > ^ < |  ML  |   ",
+  "    /     \\|______|    /     \\|______|   ",
+  "   (__|  |__)         (__|  |__)          ",
+].join("\n");
 ---
 
 <!doctype html>
@@ -24,11 +34,11 @@ const posts = (await getCollection('blog')).sort(
                 --accent-hover: #AFA9EC;
                 --bg-page: #0F1117;
                 --bg-surface: #1A1D2E;
-                --bg-elevated: #222338;
                 --text-primary: #F0EEF6;
                 --text-secondary: #D1D1D8;
                 --text-tertiary: #8E8EA0;
                 --border: #252640;
+                --green: #4ADE80;
             }
 
             body {
@@ -56,25 +66,51 @@ const posts = (await getCollection('blog')).sort(
                 font-weight: 600;
                 line-height: 1.3;
                 letter-spacing: -0.5px;
-                margin: 0 0 0.75rem;
+                margin: 0 0 0.5rem;
                 color: var(--text-primary);
+            }
+
+            .hero-sub {
+                font-size: 0.95rem;
+                color: var(--text-tertiary);
+                margin: 0 0 1.5rem;
+                font-style: italic;
+            }
+
+            .ascii-box {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 1rem;
             }
 
             .ascii-art {
                 font-family: 'Courier New', monospace;
-                color: #4ADE80;
+                color: var(--green);
                 font-size: 0.75rem;
-                line-height: 1.4;
-                margin-top: 1.5rem;
+                line-height: 1.3;
                 background: none;
                 border: none;
                 padding: 0;
+                margin: 0;
                 overflow-x: auto;
                 white-space: pre;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+            }
+
+            .ascii-tagline {
+                font-family: 'Courier New', monospace;
+                color: var(--green);
+                font-size: 0.8rem;
+                margin-top: 0.75rem;
+                opacity: 0.9;
+            }
+
+            .memorial {
+                font-size: 0.7rem;
+                color: var(--text-tertiary);
+                margin-top: 1rem;
+                font-style: italic;
+                opacity: 0.6;
             }
 
             .section-label {
@@ -82,7 +118,7 @@ const posts = (await getCollection('blog')).sort(
                 color: var(--text-tertiary);
                 letter-spacing: 1.5px;
                 text-transform: uppercase;
-                margin: 2rem 0 1rem;
+                margin: 2.5rem 0 1rem;
             }
 
             .post-list {
@@ -92,8 +128,9 @@ const posts = (await getCollection('blog')).sort(
             }
 
             .post-item {
-                padding: 1.25rem 0;
+                padding: 1.5rem 0;
                 border-bottom: 1px solid var(--border);
+                transition: background 0.2s;
             }
 
             .post-item:last-child {
@@ -110,7 +147,7 @@ const posts = (await getCollection('blog')).sort(
                 justify-content: space-between;
                 align-items: baseline;
                 gap: 1rem;
-                margin-bottom: 6px;
+                margin-bottom: 8px;
             }
 
             .post-title {
@@ -133,10 +170,11 @@ const posts = (await getCollection('blog')).sort(
             }
 
             .post-description {
-                font-size: 0.95rem;
+                font-size: 0.9rem;
                 color: var(--text-secondary);
                 line-height: 1.6;
                 margin: 0;
+                opacity: 0.85;
             }
 
             .empty-state {
@@ -165,7 +203,11 @@ const posts = (await getCollection('blog')).sort(
                 }
 
                 .ascii-art {
-                    font-size: 0.55rem;
+                    font-size: 0.5rem;
+                }
+
+                .ascii-tagline {
+                    font-size: 0.7rem;
                 }
             }
         </style>
@@ -175,15 +217,11 @@ const posts = (await getCollection('blog')).sort(
         <main>
             <section class="hero">
                 <h1>Dissecting the papers that shape AI</h1>
-                <pre class="ascii-art">{String.raw`                                          z
-                                         z
-      /\_/\  ______       /\_/\  ______  Z
-     ( o.o )|      |     ( -.- )|      |
-      > ^ < |  AI  |      > ^ < |  ML  |
-     /     \|______|     /     \|______|
-    (__|  |__)          (__|  |__)
-
-         papers worth reading.`}</pre>
+                <div class="ascii-box">
+                    <pre class="ascii-art" set:text={cats} />
+                    <span class="ascii-tagline">papers worth reading.</span>
+                    <span class="memorial">in loving memory of paperswithcode ♡</span>
+                </div>
             </section>
 
             <p class="section-label">Latest reviews</p>
