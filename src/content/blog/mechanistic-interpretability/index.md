@@ -12,7 +12,7 @@ The field has roots in [Chris Olah's](https://colah.github.io/) work on vision m
 
 The first move in the Transformer Circuits framework is to look at the transformer not as a chain of layers that transform a hidden state, but as a collection of components that all read from and write to a shared communication channel. That channel is the residual stream.
 
-![The residual stream](./1.png)
+![The residual stream](/blog/mechanistic-interpretability/1.png)
 
 When a token enters the model, it gets embedded into a vector $\mathbf{x}_0 = W_E t$. This vector is the residual stream. From here, every component (each attention head, each MLP layer) reads from the stream, computes something, and adds its result back in. Nothing is overwritten, nothing is replaced. The stream just accumulates. The final prediction is the sum of everything that was written along the way:
 
@@ -26,7 +26,7 @@ $$
 \hat{y}_t = \underbrace{\mu}_{\text{baseline}} + \underbrace{\sum_{i=1}^{p} \phi_i \, y_{t-i}}_{\text{autoregressive}} + \underbrace{\sum_{j=1}^{q} \theta_j \, \epsilon_{t-j}}_{\text{corrections}}
 $$
 
-![One-layer attention-only transformer](./2.png)
+![One-layer attention-only transformer](/blog/mechanistic-interpretability/2.png)
 
 The embedding $\mathbf{x}_0 = W_E t$ is the baseline. With no attention and no MLP, the model computes $T(t) = W_U W_E \, t$, a direct lookup from input token to output distribution. This is a bigram model. It knows that "the" is usually followed by a noun, that a period is usually followed by a capital letter, but it has no ability to condition on anything beyond the single previous token. Like $\mu$ in ARIMA, this term is always present, always contributing, and it carries a surprising amount of the prediction. Much of language is locally predictable.
 
@@ -38,7 +38,7 @@ But the ARIMA analogy is not really the point. What matters for mechanistic inte
 
 ## QK and OV Circuits
 
-![QK and OV circuits](./6.png)
+![QK and OV circuits](/blog/mechanistic-interpretability/6.png)
 
 Each attention head does two things: it decides which earlier token to look at, and it decides what to do with what it finds. The Transformer Circuits framework shows that these two jobs are handled by two separate circuits that share no parameters with each other.
 
@@ -68,7 +68,7 @@ The second piece is $W_U W_V^h W_O^h W_E$, the **OV circuit**. Once the QK circu
 
 The two circuits share an attention head but touch completely separate weight matrices. You can study one without thinking about the other. This is what makes individual attention heads interpretable.
 
-![QK and OV circuits traced through the weights](./5.png)
+![QK and OV circuits traced through the weights](/blog/mechanistic-interpretability/5.png)
 
 The figure above traces both circuits through the actual weight matrices, showing how the QK path (pink) and OV path (gold) take completely separate routes through the model.
 
@@ -80,11 +80,11 @@ In the **OV matrix**, entry $(i, j)$ says: if this head attends to token $i$, ho
 
 These matrices are enormous, with 2.5 billion entries each at a 50,000-token vocabulary. You cannot inspect every entry. But you can sort by magnitude and ask what the strongest patterns are. This is how researchers turn opaque weight matrices into readable descriptions of what each head does.
 
-![QK matrices for two attention heads](./7.png)
+![QK matrices for two attention heads](/blog/mechanistic-interpretability/7.png)
 
 The previous-token head on the left has a clean subdiagonal: "cat" attends to "the", "sat" attends to "cat", "on" attends to "sat", and so on. This is one of the simplest and most common head types. It just copies the identity of the previous token forward. The pronoun-resolution head on the right is more interesting. The row for "she" lights up almost exclusively at the "Mary" column. The head has learned a matching rule that connects pronouns to their referents.
 
-![OV matrices for two attention heads](./8.png)
+![OV matrices for two attention heads](/blog/mechanistic-interpretability/8.png)
 
 The copying head on the left is the complement to the previous-token head. Once it attends to a token, it boosts that exact token in the output. Attending to "Paris" makes the model more likely to predict "Paris" next. The association head on the right does something more sophisticated: attending to "France" boosts "Paris", attending to "Spain" boosts "Madrid", attending to "King" boosts "Queen". The light pink entries show crosstalk between related tokens. The head distinguishes primary associations from secondary ones.
 
@@ -96,11 +96,11 @@ This gives us a clean framework for understanding attention. But attention is on
 
 In a vision model like Inception v1, a single neuron might respond to both cat faces and car fronts. In a small language model, a single neuron might fire on academic citations, English dialogue, HTTP requests, and Korean text all at once. This is called **polysemanticity**: one neuron, many unrelated meanings. If you try to understand what a polysemantic neuron "does", there is no clean answer. It does several things depending on context, and there is no way to tell which meaning is active just by looking at whether the neuron fired.
 
-![Polysemanticity](./9.png)
+![Polysemanticity](/blog/mechanistic-interpretability/9.png)
 
 This is not a bug in the model. It is a compression strategy. A typical transformer layer might have 4,096 dimensions in its residual stream, but the model needs to keep track of far more than 4,096 concepts. It needs features for "French text" and "code with a bug" and "the Golden Gate Bridge" and "closing parenthesis" and tens of thousands of other things. There simply are not enough neurons to give each concept its own dedicated dimension.
 
-![Superposition](./10.png)
+![Superposition](/blog/mechanistic-interpretability/10.png)
 
 The solution the model finds is called **superposition**. Instead of assigning each feature to a single neuron, the model encodes features as *directions* in the high-dimensional activation space. In a 4,096-dimensional space, you can only fit 4,096 perfectly orthogonal directions. But if you allow a little bit of interference between them, you can pack in far more. The key insight from Anthropic's Toy Models of Superposition paper is that this trade-off depends on sparsity. If a feature is rarely active (most tokens are not about the Golden Gate Bridge), then the interference it causes is also rare, and the model can afford to pack it in at an angle to other features. The sparser the features, the more of them you can fit.
 
@@ -108,7 +108,7 @@ This is geometrically visible. In a 2D space with no sparsity, you can represent
 
 The result is that the model's internal representations are rich but tangled. The features are in there, encoded as directions, but they overlap with each other in ways that make individual neurons unreadable. To do mechanistic interpretability on the MLP layers, we need a way to untangle them.
 
-![Sparse autoencoder](./11.png)
+![Sparse autoencoder](/blog/mechanistic-interpretability/11.png)
 
 This is where **sparse autoencoders** (SAEs) come in. The idea is straightforward. Take the model's internal activations (say, 4,096 dimensions from the residual stream or an MLP layer) and project them into a much larger space (say, 65,000 or even 131,000 dimensions) using a learned encoder. Apply a sparsity constraint so that only a small number of these dimensions are active at once. Then decode back to the original 4,096 dimensions and train the whole thing to minimize reconstruction error.
 
@@ -116,13 +116,13 @@ The sparsity constraint is what makes this work. Without it, the autoencoder cou
 
 When Anthropic trained SAEs on Claude 3 Sonnet with roughly 34 million learned features, they found features that fired specifically on mentions of the Golden Gate Bridge, on brain science terminology, on popular tourist attractions, on transit infrastructure, on code quality issues, on emotional expressions, and on potential safety concerns. These were not hand-labeled. They emerged from the unsupervised decomposition.
 
-![Feature activation distribution for the Golden Gate Bridge feature](./13.png)
+![Feature activation distribution for the Golden Gate Bridge feature](/blog/mechanistic-interpretability/13.png)
 
 The Golden Gate Bridge feature is a good example of what a clean SAE feature looks like. Most inputs produce zero activation (the feature is off). When it does fire, the activation strength correlates with how directly the input relates to the bridge. Vaguely related content (San Francisco, orange-colored things) produces weak activations. Direct mentions of the Golden Gate Bridge produce strong activations. At the highest activation levels, the specificity is near-perfect: the feature fires on exactly and only the thing it represents.
 
 This lets us validate features in several ways. We can look at the top-activating examples and check that they share a coherent theme. We can use a language model to automatically generate a description of what the feature detects, and then test whether that description predicts the feature's activations on new inputs. And most powerfully, we can intervene: amplify a feature and see if the model's behavior changes in the way we would expect.
 
-![Feature steering](./12.png)
+![Feature steering](/blog/mechanistic-interpretability/12.png)
 
 When researchers clamped the Golden Gate Bridge feature to 10 times its maximum activation, Claude stopped saying "I don't have a physical form" and started describing itself as the bridge, with its "beautiful orange color, towering towers, and sweeping suspension cables." Clamping a brain sciences feature made the model answer "neuroscience" when asked about the most interesting science, even though it would normally say "physics." A transit infrastructure feature made the model confabulate a bridge when giving walking directions to a grocery store.
 
