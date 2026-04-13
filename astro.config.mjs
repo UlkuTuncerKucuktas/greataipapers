@@ -4,14 +4,20 @@ import sitemap from '@astrojs/sitemap';
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 
+import cloudflare from '@astrojs/cloudflare';
+
 export default defineConfig({
-    site: 'https://greataipapers.com',
-    integrations: [mdx(), sitemap()],
-    markdown: {
-        remarkPlugins: [remarkMath],
-        rehypePlugins: [rehypeKatex],
-    },
-    image: {
-        service: { entrypoint: 'astro/assets/services/noop' },
-    },
+  site: 'https://greataipapers.com',
+  integrations: [mdx(), sitemap()],
+
+  markdown: {
+      remarkPlugins: [remarkMath],
+      rehypePlugins: [rehypeKatex],
+  },
+
+  image: {
+      service: { entrypoint: 'astro/assets/services/noop' },
+  },
+
+  adapter: cloudflare(),
 });
